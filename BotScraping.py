@@ -123,11 +123,7 @@ for produto in produtos:
     link = produto.find('a')['href']
     bkp_sku = produto.find('a')['id']
     bkp_title = produto.find('a')['title']
-    indisponivel = produto.find('p').text
-    if 'Produto' in indisponivel:
-        indisponivel = 'SKU indisponível para entrega'
-    else:
-        indisponivel = 'Disponível na tela'
+
     #Abrir a nova aba
     navegador.execute_script(f"window.open('{link}');")
 
@@ -201,7 +197,7 @@ for produto in produtos:
 
     contador = contador + 1
 
-    dados.append([title, SKU, voltagem, categoria, precopadrao, precopix, precoprime, imagem1, imagem2, descricao, frete, indisponivel])
+    dados.append([title, SKU, voltagem, categoria, precopadrao, precopix, precoprime, imagem1, imagem2, descricao, frete])
 
     navegador.close()
     navegador.switch_to.window(navegador.window_handles[0])
@@ -209,7 +205,7 @@ for produto in produtos:
 dataHora = datetime.now()
 dataConvertida = dataHora.strftime('%d.%m_as_%Hh%M')
 geraNomePlanilha = 'ConsultaSite_' + dataConvertida + '.xlsx'
-dados_completos = pd.DataFrame(dados, columns=['Título', 'SKU_FASTSHOP', 'Voltagem', 'Categoria', 'Preço Normal', 'Preço PIX', 'Preço Prime', 'Primeira Imagem','Segunda Imagem', 'Prévia Descrição', 'Frete', 'Indisponível para entrega'])
+dados_completos = pd.DataFrame(dados, columns=['Título', 'SKU_FASTSHOP', 'Voltagem', 'Categoria', 'Preço Normal', 'Preço PIX', 'Preço Prime', 'Primeira Imagem','Segunda Imagem', 'Prévia Descrição', 'Frete'])
 dados_completos.to_excel(geraNomePlanilha, index=False)
 sleep(1)
 
